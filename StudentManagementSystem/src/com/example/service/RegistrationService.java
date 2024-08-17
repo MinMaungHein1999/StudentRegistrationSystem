@@ -1,20 +1,19 @@
 package com.example.service;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
+import com.example.dao.StudentDao;
+import com.example.dao.StudentDaoImpl;
 import com.example.model.Student;
 
-public abstract class RegistrationService {
-	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+public abstract class RegistrationService extends BaseService{
 	
-	private static final int maxStudentCount = 1000;
-	private static Student[] students= new Student[maxStudentCount];
+	private StudentDao studentDao;
 	private Student student;
 	
 	public RegistrationService() throws IOException {
 		this.getStudentInformation();
+		this.studentDao = new StudentDaoImpl();
 	}
 	
 	public void getStudentInformation() throws IOException{
@@ -24,16 +23,14 @@ public abstract class RegistrationService {
 		int age = Integer.parseInt(br.readLine());
 		
 		this.student = new Student(name, age);
-		
 		this.getTypeInfo();
-		
 		this.addNewStudent();
 	}
 	
 	public abstract void getTypeInfo() throws IOException;
 	
 	public void addNewStudent() {
-		students[Student.getStudentCount()-1] = this.student;
+		this.studentDao.addStudent(this.student);
 	}
 	
 
@@ -48,10 +45,11 @@ public abstract class RegistrationService {
 	public void displayStudents() {
 		System.out.println("******** Students Information *****");
 		for(int i=0; i<Student.getStudentCount(); i++) {
-			System.out.println(students[i]);
+			System.out.println(this.studentDao.getStudentById(i+1));
 		}
 		System.out.println("Students Count : " + Student.getStudentCount());
 		System.out.println("International Students Count : " + Student.getInterStudentCount());
 		System.out.println("Regular Students Count : " + Student.getRegularStudentCount());
 	}
+
 }

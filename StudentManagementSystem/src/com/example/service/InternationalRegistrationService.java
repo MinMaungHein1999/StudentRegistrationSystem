@@ -7,7 +7,7 @@ import com.example.model.VisaInformation;
 import com.example.model.Student;
 
 public class InternationalRegistrationService extends RegistrationService {
-	
+	private static Student[] interStudents = new InternationalStudent[100];
 	public InternationalRegistrationService() throws IOException {
 		super();
 	}
@@ -20,7 +20,8 @@ public class InternationalRegistrationService extends RegistrationService {
 		String passport = this.br.readLine();
 		VisaInformation visaInfo = new VisaInformation(type, passport);
 		Student student =new InternationalStudent(this.getStudent(), visaInfo);
-		this.setStudent(student);		
+		this.setStudent(student);
+		interStudents[Student.getInterStudentCount()] = this.getStudent();
 	}
 
 }

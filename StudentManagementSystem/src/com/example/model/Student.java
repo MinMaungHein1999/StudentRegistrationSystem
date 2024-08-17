@@ -1,13 +1,16 @@
 package com.example.model;
 
 public class Student {
-	private String id;
+	
+	public static final int maxStudentCount = 1000;
+	private int id;
 	private String name;
 	private int age;
 	private boolean isRegular;
 	private static int studentCount = 0; 
 	private static int interStudentCount = 0;
 	private static int regularStudentCount = 0;
+	private Exam exam;
 	
 	public Student(String name, int age) {
 		this.name = name;
@@ -19,7 +22,7 @@ public class Student {
 		this.age = student.age;
 		this.isRegular = type;
 		studentCount++;
-		this.id = "STU" + studentCount;
+		this.id = studentCount;
 		if(type) {
 			regularStudentCount++;
 		}else {
@@ -50,5 +53,21 @@ public class Student {
 
 	public static void setRegularStudentCount(int regularStudentCount) {
 		Student.regularStudentCount = regularStudentCount;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }
